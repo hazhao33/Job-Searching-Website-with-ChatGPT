@@ -5,3 +5,4 @@ Project/frontend/node_modules/.cache/
 Project/frontend/node_modules/.cache/.eslintcache
 *.pack
 Project/frontend/node_modules/.cache/.eslintcache
+/Project/backend/coverage

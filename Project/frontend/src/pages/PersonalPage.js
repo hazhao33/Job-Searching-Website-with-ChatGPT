@@ -23,7 +23,7 @@ function Developer({  }) {
 
   useEffect (() => {
       const fetchMemberPage = async () => {
-          const response = await fetch(`http://localhost:4000/about/${name}`)
+          const response = await fetch(`http://easyconnectgroup6.work:4000/about/${name}`)
           const json = await response.json()
 
           if (response.ok) {

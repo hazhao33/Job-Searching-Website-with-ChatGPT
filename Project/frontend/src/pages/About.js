@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
+import "../Style/pageLayout.css";
 
 import Row from "react-bootstrap/Row";
 
@@ -13,7 +14,7 @@ const About = () => {
 
   useEffect (() => {
       const fetchTeamMembers = async () => {
-          const response = await fetch('http://localhost:4000/about/')
+          const response = await fetch('http://easyconnectgroup6.work:4000/about/')
           const json = await response.json()
 
           if (response.ok) {
@@ -23,7 +24,7 @@ const About = () => {
       fetchTeamMembers()
   }, [])
 return (
-  <section id="teams" className="block teams-block ">
+  <section id="teams" className="block teams-block div_min_size" >
     <Container fluid>
       <div className="text-center font-bold my-10 opacity-30 title-holder">
         <h2>Our teams</h2>

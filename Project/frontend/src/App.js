@@ -21,14 +21,18 @@ import PersonalPage from "./pages/PersonalPage";
 import ResumeForm from "./resumeBuilder/ResumeForm";
 
 import { useAuthContext } from "./Hooks/useAuthContext";
+const padding = {
+  paddingBottom: "50px"
+};
 
-function App() {
+
+function App() { 
   const { user } = useAuthContext();
   return (
     <main>
       <Navigationbar  />
-      <Routes>
-        <Route path="/" element={<Home />} />
+      <Routes style={padding}>
+        <Route path="/" element={<JobSearch  />} />
         <Route path="/profile" element={user ? <Profile />: <Navigate to="/login" />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path="/logout" element={<Logout />} />
@@ -38,11 +42,11 @@ function App() {
         <Route path="/job_detail" element={<JobDetail />} />
         <Route path="/my_jobs" element={<SaveJobs  />} />
         <Route path="/view_company_jobs" element={<CompanyJobs  />} />
-        <Route path="/jobSearch" element={<JobSearch  />} />
+        {/* <Route path="/jobSearch" element={<JobSearch  />} /> */}
         <Route path="/about" element={<About  />} />
         <Route path="/about/:name" element={<PersonalPage/>} />
       </Routes>
-      <Footer />
+      {/* <Footer/> */}
     </main>
   );
 }

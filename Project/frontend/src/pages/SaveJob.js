@@ -8,7 +8,7 @@ import "../Style/pageLayout.css";
 
 const handlegetJobs = async (user) => {
   try {
-    const response = await axios.post('http://localhost:4000/user/my_jobs', {email : user.data.email});
+    const response = await axios.post('http://easyconnectgroup6.work:4000/user/my_jobs', {email : user.data.email});
     const jobs = await response.data.user.userJobs;
     //console.log(jobs);
     // console.log(typeof jobs);
@@ -21,7 +21,7 @@ const handlegetJobs = async (user) => {
 
 const handleremoveJobId = async (user, jobPost) => {
   try {
-    const response = await axios.patch('http://localhost:4000/user/my_jobs/delete', 
+    const response = await axios.patch('http://easyconnectgroup6.work:4000/user/my_jobs/delete', 
     {
       email : user.data.email,
       jobPost : jobPost

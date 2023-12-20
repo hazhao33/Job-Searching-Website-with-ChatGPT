@@ -5,9 +5,21 @@ import {
   MDBBtn
 } from 'mdb-react-ui-kit';
 
+const footerStyle = {
+  position: 'fixed',
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  color: 'white',
+  textAlign: 'center',
+  padding: '10px 0',
+};
+
 export default function Footer() {
   return (
-    <MDBFooter className='text-center text-white blue  navbar-fixed-bottom ' >
+    <div>
+    <MDBFooter className='text-center text-white blue  navbar-fixed-bottom ' style={footerStyle} >
       <MDBContainer className='p-4 pb-0'>
         <section className=''>
           <p className='d-flex justify-content-center align-items-center'>
@@ -26,5 +38,6 @@ export default function Footer() {
         </a>
       </div>
     </MDBFooter>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ import PercentComponent from "../component/ChatGptResponce";
 import JobInfo from "../component/JobInfo";
 // npm install react-circular-progressbar
 
-let active = 1;
+let active = 2;
 let items = [];
 for (let number = 1; number <= 5; number++) {
   items.push(
@@ -23,36 +23,14 @@ for (let number = 1; number <= 5; number++) {
 //get user's resume from database
 const handlegetResume = async (user) => {
     try {
-        const response = await axios.post('http://localhost:4000/user/resume_builder', {email : user.data.email});
+        const response = await axios.post('http://easyconnectgroup6.work:4000/user/resume_builder', {email : user.data.email});
         const userResume = await response.data.userResume; //THIS IS WHERE USER'S RESUME IS STORED
         return userResume; 
     } catch (error) {
         console.log(error);
     }  
 };
-//call Jsearch API
-const searchJobPost = async (search, page) => {
-    try {
-        const options = {
-            method: "GET",
-            url: `https://jsearch.p.rapidapi.com/search`,
-            headers: {
-                "X-RapidAPI-Key": '6745784414msh2584b4f8a420d41p15078djsn628ab64c50c9',
-                "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
-            },
-            params: {
-                query: search,
-                page: page.toString(),
-            },
-        };
-        const response = await axios.request(options);
-        return response.data.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
 
-//main function
 const JobSearch = () => {
     const navigate = useNavigate();
     const [search, setSearch] = useState([]);
@@ -74,11 +52,10 @@ const JobSearch = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = searchResult.slice(indexOfFirstItem, indexOfLastItem);
 
-    //save job post to database for registered user
     const saveJob = async (jobPost) => {
         if(user){
             await axios
-            .patch('http://localhost:4000/user/jobSearch', {
+            .patch('http://easyconnectgroup6.work:4000/user/jobSearch', {
                 email : user.data.email,
                 jobData : jobPost,
             })
@@ -96,7 +73,6 @@ const JobSearch = () => {
         }
     };
 
-    //update page loading
     useEffect(() => {
         if (searchResult.length > 0) {
           setJobDetails(searchResult[0]);
@@ -113,18 +89,38 @@ const JobSearch = () => {
                 //setUserResume(userInfo);                      //save all user info
                 setUserResume(userInfo.professional.skills);    //only save user skill
             })
-        }Í
+        }
     }, [user]);
 
-    // use searchJobPost function
+    //call JSearch API
     const handleSearch = async () => {
         setPageLoading(true);
         setSearchLoader(true);
-        setSearchResult(await searchJobPost(search, page));
-        setSearchLoader(false);
-    }
+        setSearchResult([])
+        try {
+            const options = {
+                method: "GET",
+                url: `https://jsearch.p.rapidapi.com/search`,
+                headers: {
+                    "X-RapidAPI-Key": '6745784414msh2584b4f8a420d41p15078djsn628ab64c50c9',
+                    "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
+                },
+                params: {
+                    query: search,
+                    page: page.toString(),
+                },
+            };
 
-    //Function to handle page changes
+            const response = await axios.request(options);
+            setSearchResult(response.data.data);
+        } catch (error) {
+            setSearchError(error);
+            console.log(error);
+        } finally {
+            setSearchLoader(false);
+        }
+    };
+    // Function to handle page changes
     const handlePageChange = (pageNumber) => {
         setActive(pageNumber);
     };

@@ -7,7 +7,6 @@ const get_teaminfo = async (req,res) =>{
 
 const get_single_teaminfo = async (req, res) =>{
     const name = req.params.name;
-    console.log(name);
     const member = await teamInfo.find({"teamName": name});
     res.status(200).json(member);
 }

@@ -175,7 +175,7 @@ const EduacationDetails = (props) => {
 
   const saveResume = () => {
     // Send profile data to MongoDB using Axios
-    axios.patch("http://localhost:4000/user/resume_builder", resumeInfo)
+    axios.patch("http://easyconnectgroup6.work:4000/user/resume_builder", resumeInfo)
       .then((response) => {
         console.log(resumeInfo)
         console.log("Profile data saved:", response.data);

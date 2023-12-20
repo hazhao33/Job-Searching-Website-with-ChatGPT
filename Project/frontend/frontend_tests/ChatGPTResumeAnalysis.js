@@ -7,7 +7,7 @@ const chatGPTResumeAnalysis = async (userInfo, jobInfo) => {
     }
     try{
         console.log("getting ai response");
-        const response = await axios.post('http://localhost:4000/user/chatGPT', data);
+        const response = await axios.post('http://easyconnectgroup6.work:4000/user/chatGPT', data);
         //console.log("response.data.chatgptresponse: ", response.data.chatgptresponse);
         return response.data.chatgptresponse; //display chatgpt response to console
 

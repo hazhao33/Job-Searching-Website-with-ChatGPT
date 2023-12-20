@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 //import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Hooks/useAuthContext";
+import "../Style/pageLayout.css";
 
 import {
   MDBContainer,
@@ -70,7 +71,7 @@ const Login = () => {
 
     if(accountType === "company"){
       axios
-        .post(`http://localhost:4000/company/signup`, companyAccountData)
+        .post(`http://easyconnectgroup6.work:4000/company/signup`, companyAccountData)
         .then(function (response) {
           console.log(response);
   
@@ -87,7 +88,7 @@ const Login = () => {
     }
     else if(accountType === "personal"){
       axios
-        .post(`http://localhost:4000/user/signup`, personalAccountData)
+        .post(`http://easyconnectgroup6.work:4000/user/signup`, personalAccountData)
         .then(function (response) {
           console.log(response);
   
@@ -125,7 +126,7 @@ const Login = () => {
 
     if(accountType == "company"){
       axios
-        .post(`http://localhost:4000/company/login`, companyAccountData)
+        .post(`http://easyconnectgroup6.work:4000/company/login`, companyAccountData)
         .then(function (response) {
           console.log(companyEmail, companyPassword);
 
@@ -142,7 +143,7 @@ const Login = () => {
     }
     else if(accountType == "personal"){
       axios
-        .post(`http://localhost:4000/user/login`, personalAccountData)
+        .post(`http://easyconnectgroup6.work:4000/user/login`, personalAccountData)
         .then(function (response) {
           console.log(email);
 
@@ -163,11 +164,12 @@ const Login = () => {
   };
 
   return (
+    <div className="div_min_size">
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
       <MDBTabs
         pills
         justify
-        className="mb-3 d-flex flex-row justify-content-between"
+        className="mb-3 d-flex flex-row justify-content-between "
       >
         <MDBTabsItem>
           <MDBTabsLink
@@ -489,6 +491,7 @@ const Login = () => {
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBContainer>
+    </div>
   );
 };
 

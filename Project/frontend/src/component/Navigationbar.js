@@ -27,14 +27,14 @@ const Navigationbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <NavbarCollapse id="basic-navbar-nav">
         <Nav className="justify-content-center flex-grow-1 pe-3">
-          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/">Search</Nav.Link>
           {user && user.data.accountType === "personal" && (
             <Nav.Link href="/resume_builder">Resume Builder</Nav.Link>
           )}
           {user && user.data.accountType === "company" && (
             <div><Nav.Link href="/add_jobs">Add Jobs</Nav.Link></div>
           )}
-          <Nav.Link href="/jobSearch">Search</Nav.Link>
+          {/* <Nav.Link href="/jobSearch">Search</Nav.Link> */}
           {user && user.data.accountType === "personal" && (
             <Nav.Link href="/my_jobs">My Jobs</Nav.Link>
           )}

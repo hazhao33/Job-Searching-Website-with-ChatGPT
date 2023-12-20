@@ -1,16 +1,12 @@
 require('dotenv').config(); //importing dotenv module to use the enviorment variables in the .env file
 const express = require('express');
 const cors = require('cors'); // Import the cors middleware
-const port = process.env.PORT;
 const aboutRoutes = require('./routes/aboutRoutes');
 const userRoutes = require('./routes/userRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 
 //express app
 const app = express();
-
-//importing mongoose
-const mongoose = require('mongoose');
 
 app.use(cors());
 
@@ -23,15 +19,6 @@ app.use('/about', aboutRoutes);
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
- .then(()=>{
-    app.listen(port, () =>{
-        console.log(`Datebase connected and Express running at port ${port}`);
-    })
- })
- .catch((error)=>{
-    console.log(error);
- })
-
+module.exports = app;
 
 

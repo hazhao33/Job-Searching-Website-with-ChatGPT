@@ -21,7 +21,7 @@ import { useAuthContext } from "../Hooks/useAuthContext";
 //get user's resume from database
 const handlegetResume = async (user) => {
   try {
-    const response = await axios.post('http://localhost:4000/user/resume_builder', {email : user.data.email});
+    const response = await axios.post('http://easyconnectgroup6.work:4000/user/resume_builder', {email : user.data.email});
     const userResume = await response.data.userResume; //THIS IS WHERE USER'S RESUME IS STORED
     return userResume; 
   } catch (error) {

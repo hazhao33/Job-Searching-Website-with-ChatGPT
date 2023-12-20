@@ -12,35 +12,6 @@ const skillBoxStyle = {
     marginTop: '10px',
 };
 
-const addSkills = (newSkill, prevSkills) => {
-    const updatedSkills = prevSkills.includes(newSkill)
-      ? prevSkills.filter((skill) => skill !== newSkill)
-      : [...prevSkills, newSkill];
-    const skillsWithCommas = updatedSkills.join(', ');
-    console.log("selectedSkills: " + skillsWithCommas);
-    return updatedSkills;
-};
-
-const chatGPTResumeAnalysis = async (userInfo, jobInfo) => {
-    /*Set what attributes of userResume and jobPost you want to send to chatGPT in the data object*/
-    console.log("userInfo ", userInfo);
-    console.log("jobInfo ",jobInfo);
-    const data = {
-        userResumeInfo: userInfo,
-        jobPostInfo: jobInfo,
-    }
-    try{
-        console.log("getting ai response");
-        const response = await axios.post('http://localhost:4000/user/chatGPT', data);
-        console.log("response.data.chatgptresponse: ", response.data.chatgptresponse);
-        return response.data.chatgptresponse; //display chatgpt response to console
-    }catch(error){
-        console.log(error.response.data);
-        console.log("response.data.chatgptresponse: ", response.data.chatgptresponse);
-        return null;
-    }
-}
-
 const PercentComponent = (props) => {
     const [aiResponse, setAiResponse] = useState(null);
     const [missingSkills, setMissingSkills] = useState(null);
@@ -49,17 +20,29 @@ const PercentComponent = (props) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     var { user } = useAuthContext();
 
-    const getAiResponse = async ()=> {
-        setLoadingData(true);
-        console.log("props.userInfo ",props.userInfo);
-        console.log("props.jobInfo ",props.jobInfo);
-        setAiResponse(await chatGPTResumeAnalysis(props.userInfo, props.jobInfo));
-        setLoadingData(false);
+    const chatGPTResumeAnalysis = async (userInfo, jobInfo) => {
+    /*Set what attributes of userResume and jobPost you want to send to chatGPT in the data object*/
+        const data = {
+            userResumeInfo: userInfo,
+            jobPostInfo: jobInfo,
+        }
+
+        try{
+            console.log("getting ai response");
+            const response = await axios.post('http://easyconnectgroup6.work:4000/user/chatGPT', data);
+            setAiResponse(response.data.chatgptresponse); //display chatgpt response to console
+        }
+        catch(error){
+            console.log(error.response.data);
+            setAiResponse(null);
+        }
     }
 
-    const handleAddSkill = async (newSkill) => {
-        setSelectedSkills(await addSkills(newSkill, selectedSkills));
-    };
+    const getAiResponse = async ()=> {
+        setLoadingData(true);
+        await chatGPTResumeAnalysis(props.userInfo, props.jobInfo);
+        setLoadingData(false);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +73,18 @@ const PercentComponent = (props) => {
         fetchData();
     }, [aiResponse]);
 
+    const addSkills = async (newSkill) => {
+        setSelectedSkills((prevSkills) => {
+          const updatedSkills = prevSkills.includes(newSkill)
+            ? prevSkills.filter((skill) => skill !== newSkill)
+            : [...prevSkills, newSkill];
+          const skillsWithCommas = updatedSkills.join(', ');
+          console.log("selectedSkills: " + skillsWithCommas);
+      
+          return updatedSkills;
+        });
+      };
+
     useEffect(() => {
         console.log('selectedSkills:', selectedSkills);
         setSaveSkills(selectedSkills.join(',\n'));
@@ -98,7 +93,7 @@ const PercentComponent = (props) => {
     const storeSkills = async () => {
         if (selectedSkills.length > 0){
             try{
-                const response = await axios.post('http://localhost:4000/user/updateResumeskills',
+                const response = await axios.post('http://easyconnectgroup6.work:4000/user/updateResumeskills',
                 {
                     email: user.data.email,
                     missingSkills: saveSkills
@@ -134,7 +129,7 @@ const PercentComponent = (props) => {
                                             type="checkbox" 
                                             id={`checkbox-${skill}`} 
                                             style={checkboxStyle}  
-                                            onClick={() => handleAddSkill(skill)}checked={selectedSkills.includes(skill)}>
+                                            onClick={() => addSkills(skill)}checked={selectedSkills.includes(skill)}>
                                         </input>
                                         {skill}
                                     </ListGroup.Item>

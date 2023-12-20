@@ -13,10 +13,10 @@ const teamSchema = new Schema({
     teamTitle: {
         type: String
     },
-    teamEmail: {
+    teamPicture: {
         type: String
     },
-    teamPicture: {
+    teamEmail: {
         type: String
     },
     teamGitHub: {

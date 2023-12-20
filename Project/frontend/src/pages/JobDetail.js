@@ -4,6 +4,7 @@ import { useAuthContext } from "../Hooks/useAuthContext";
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import { Container, Row, Col, Form, Stack, Button, Image, Card  } from 'react-bootstrap';
+import "../Style/pageLayout.css";
 
 // //send user's resume and the job post to chatGPT
 // const chatGPTResumeAnalysis = async (userResume, jobPost) => {
@@ -14,7 +15,7 @@ import { Container, Row, Col, Form, Stack, Button, Image, Card  } from 'react-bo
 //   }
 
 //   try{
-//     const response = await axios.post('http://localhost:4000/user/chatGPT', data);
+//     const response = await axios.post('http://easyconnectgroup6.work:4000/user/chatGPT', data);
 //     console.log(response.data.chatgptresponse); //display chatgpt response to console
 //   }
 //   catch(error){
@@ -25,7 +26,7 @@ import { Container, Row, Col, Form, Stack, Button, Image, Card  } from 'react-bo
 // //get user's resume from database
 // const handlegetResume = async (user) => {
 //   try {
-//     const response = await axios.post('http://localhost:4000/user/resume_builder', {email : user.data.email});
+//     const response = await axios.post('http://easyconnectgroup6.work:4000/user/resume_builder', {email : user.data.email});
 //     const userResume = await response.data.userResume; //THIS IS WHERE USER'S RESUME IS STORED
 //     return userResume; 
 //   } catch (error) {
@@ -52,7 +53,7 @@ const JobDetail = () => {
     const saveJob = async (jobPost) => {
         if(user){
             await axios
-            .patch('http://localhost:4000/user/jobSearch', {
+            .patch('http://easyconnectgroup6.work:4000/user/jobSearch', {
                 email : user.data.email,
                 jobData : jobPost,
             })
@@ -87,7 +88,7 @@ const JobDetail = () => {
 
 
   return (
-    <div class="container-sm" key = {jobPost.job_id}>
+    <div class="container-sm div_min_size" key = {jobPost.job_id}>
       <div class="w-100 p-3 d-flex justify-content-center">
       <div class="card border border-primary shadow-0 ">
         <div class="card-body">
